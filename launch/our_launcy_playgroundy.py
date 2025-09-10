@@ -76,29 +76,30 @@ def generate_launch_description():
             "P": "0.0",
         }.items(),
     )
-    # iris_2 = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         [
-    #             PathJoinSubstitution(
-    #                 [
-    #                     FindPackageShare("ardupilot_gz_bringup"),
-    #                     "launch",
-    #                     "robots",
-    #                     "iris_lidar.launch.py",
-    #                 ]
-    #             ),
-    #         ]
-    #     ),
-    #     launch_arguments={
-    #         "model": "iris_with_lidar",
-    #         "name": "iris2",
-    #         "x": "5",
-    #         "y": "5",
-    #         "z": "0.194923",
-    #         "R": "0.0",
-    #         "P": "0.0",
-    #     }.items(),
-    # )
+
+    iris_2 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ardupilot_gz_bringup"),
+                        "launch",
+                        "robots",
+                        "iris_lidar.launch.py",
+                    ]
+                ),
+            ]
+        ),
+        launch_arguments={
+            "model": "iris_with_lidar",
+            "name": "iris2",
+            "x": "1",
+            "y": "1",
+            "z": "0.194923",
+            "R": "0.0",
+            "P": "0.0",
+        }.items(),
+    )
 
     # Gazebo.
     gz_sim_server = IncludeLaunchDescription(
@@ -119,7 +120,7 @@ def generate_launch_description():
     )
 
     # RViz.
-    rviz_1 = Node(
+    rviz = Node(
         package="rviz2",
         executable="rviz2",
         arguments=[
@@ -128,26 +129,16 @@ def generate_launch_description():
         ],
         condition=IfCondition(LaunchConfiguration("rviz")),
     )
-    # rviz_2 = Node(
-    #     package="rviz2",
-    #     executable="rviz2",
-    #     arguments=[
-    #         "-d",
-    #         f'{Path(pkg_project_bringup) / "rviz" / "iris_with_lidar.rviz"}',
-    #     ],
-    #     condition=IfCondition(LaunchConfiguration("rviz")),
-    # )
 
     return LaunchDescription(
         [
             DeclareLaunchArgument(
-                "rviz", default_value="true", description="Open RViz."
+                "rviz", default_value="false", description="Open RViz."
             ),
             gz_sim_server,
             gz_sim_gui,
-            # iris_1,
-            # iris_2,
-            rviz_1,
-            # rviz_2,
+            iris_1,
+            iris_2,
+            rviz,
         ]
     )
