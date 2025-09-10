@@ -133,7 +133,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             DeclareLaunchArgument(
-                "rviz", default_value="false", description="Open RViz."
+                "rviz", default_value="false", description="Open RViz." # RVIZ DOES NOT SEEM TO WORK WITH SWARM. SO DISABLE
             ),
             gz_sim_server,
             gz_sim_gui,
