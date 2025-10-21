@@ -25,6 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'copter_takeoff = our_sim_playground3.copter_takeoff_example_COPY:main'
         ],
     },
 )

@@ -77,29 +77,36 @@ def generate_launch_description():
         }.items(),
     )
 
-    iris_2 = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("ardupilot_gz_bringup"),
-                        "launch",
-                        "robots",
-                        "iris_lidar.launch.py",
-                    ]
-                ),
-            ]
-        ),
-        launch_arguments={
-            "model": "iris_with_lidar",
-            "name": "iris2",
-            "x": "1",
-            "y": "1",
-            "z": "0.194923",
-            "R": "0.0",
-            "P": "0.0",
-        }.items(),
-    )
+    drone_app = Node(
+            package='our_sim_playground3',
+            namespace='drone',
+            executable='copter_takeoff',
+            name='drone',
+        )
+
+    # iris_2 = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [
+    #             PathJoinSubstitution(
+    #                 [
+    #                     FindPackageShare("ardupilot_gz_bringup"),
+    #                     "launch",
+    #                     "robots",
+    #                     "iris_lidar.launch.py",
+    #                 ]
+    #             ),
+    #         ]
+    #     ),
+    #     launch_arguments={
+    #         "model": "iris_with_lidar",
+    #         "name": "iris2",
+    #         "x": "1",
+    #         "y": "1",
+    #         "z": "0.194923",
+    #         "R": "0.0",
+    #         "P": "0.0",
+    #     }.items(),
+    # )
 
     # Gazebo.
     gz_sim_server = IncludeLaunchDescription(
@@ -138,7 +145,7 @@ def generate_launch_description():
             gz_sim_server,
             gz_sim_gui,
             iris_1,
-            iris_2,
+            drone_app,
             rviz,
         ]
     )
